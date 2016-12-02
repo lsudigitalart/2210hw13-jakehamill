@@ -50,7 +50,7 @@ function playMusic() {
 function draw(){
   actualTime = millis() - loadTime;
 
-  var snareSpeed = map(fft.getEnergy("highMid"), .0075, .01);
+  var snareSpeed = map(amp.getLevel, .0075, .01);
 
   if (actualTime > 0 && actualTime < 164000) {
     var x = offset + cos(angle) * scalar;
