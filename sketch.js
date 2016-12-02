@@ -50,7 +50,7 @@ function playMusic() {
 function draw(){
   actualTime = millis() - loadTime;
 
-  var snareSpeed = map(amp.getLevel, .0075, .01);
+  var snareSpeed = map(fft.getEnergy("highMid"), 0, 255, .0075, .01);
 
   if (actualTime > 0 && actualTime < 164000) {
     var x = offset + cos(angle) * scalar;
@@ -74,7 +74,7 @@ function draw(){
   if (actualTime > 500 && actualTime < 164000) {
     translate(500, 350);
     rotate(r);
-    r = r + snareSpeed;
+    r = r + snare;
     image(fur, x, y);
   }
   if (actualTime > 2000 && actualTime < 164000) {
