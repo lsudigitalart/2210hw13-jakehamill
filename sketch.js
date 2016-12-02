@@ -17,6 +17,10 @@ var music;
 var actualTime = 0;
 var loadTime = 0;
 
+var amp;
+var fft;
+
+
 
 function preload(){
    blue = loadImage("imgs/blue.png");
@@ -38,11 +42,15 @@ function setup() {
 function playMusic() {
   loadTime = millis();
   music.loop();
+
+  amp = new p5.Amplitude(.97);
+  fft = new p5.FFT(.0);
 }
 
 function draw(){
   actualTime = millis() - loadTime;
 
+  var snareSpeed = map(fft.getEnergy("highMid"), .0075, .01);
 
   if (actualTime > 0 && actualTime < 164000) {
     var x = offset + cos(angle) * scalar;
@@ -66,7 +74,7 @@ function draw(){
   if (actualTime > 500 && actualTime < 164000) {
     translate(500, 350);
     rotate(r);
-    r = r + .0075;
+    r = r + snareSpeed;
     image(fur, x, y);
   }
   if (actualTime > 2000 && actualTime < 164000) {
