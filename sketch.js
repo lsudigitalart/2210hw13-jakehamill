@@ -37,20 +37,22 @@ function preload(){
 function setup() {
   createCanvas(1000,700);
   music = loadSound("music/music.mp3", playMusic);
-  }
+
+  fft = new p5.FFT(.0);
+
+}
 
 function playMusic() {
   loadTime = millis();
   music.loop();
 
-  amp = new p5.Amplitude(.97);
-  fft = new p5.FFT(.0);
 }
 
 function draw(){
   actualTime = millis() - loadTime;
 
-  var snareSpeed = map(fft.getEnergy("highMid"), 0, 255, .0075, .01);
+
+  var bassSpeed = map(fft.getEnergy("bass"), 0, 255, .0075, .1);
 
   if (actualTime > 0 && actualTime < 164000) {
     var x = offset + cos(angle) * scalar;
@@ -74,29 +76,29 @@ function draw(){
   if (actualTime > 500 && actualTime < 164000) {
     translate(500, 350);
     rotate(r);
-    r = r + snare;
+    r = r + bassSpeed;
     image(fur, x, y);
   }
   if (actualTime > 2000 && actualTime < 164000) {
     translate(500, 350);
     rotate(r);
-    r = r + .0075;
+    r = r + bassSpeed;
     image(gold, x, y);
   }
   if (actualTime > 3700 && actualTime < 164000) {
     translate(500, 350);
     rotate(r);
-    r = r + .0075;
+    r = r + bassSpeed;
     image(ice, x, y);
   }
   if (actualTime > 5000 && actualTime < 164000) {
     translate(500, 350);
     rotate(r);
-    r = r + .0075;
+    r = r + bassSpeed;
     image(teal, x, y);
   }
 
-  //fill(random(0, 255));
+  //fill(snareSpeed);
   //ellipse(random(1000), random(700), 100, 100);
 
 
